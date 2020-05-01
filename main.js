@@ -1,41 +1,109 @@
-// Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
-const path = require('path')
+'use strict'
+const {
+  app, BrowserWindow,
+  Tray, nativeImage, Menu
+} = require('electron')
+const electron = require('electron')
+const globalShortcut = electron.globalShortcut
+var ipc = require('electron').ipcMain;
+
+ipc.on('invokeAction', function(event, data){
+  var result = processData(data);
+  event.sender.send('actionReply', result);
+});
+
+const BrowserWindowOptions = {
+  width: 500,
+  height: 300,
+  useContentSize: true,
+  webPreferences: {
+    nodeIntegration: true
+  },
+  frame: false,
+  transparent: true,
+  resizable: false,
+  center: false
+}
+const TrayItemsId = {
+  OpenWindow: '0',
+  Options: '1',
+  Close: '2'
+}
+let TrayMenu = Menu.buildFromTemplate([
+  {id: TrayItemsId.OpenWindow, label: 'Player', role: 'window'},
+  {id: TrayItemsId.Options, label: 'Options'},
+  {id: TrayItemsId.Close, label: 'Close', role: 'close'}
+])
+
+
+let mainWindow
+let tray = null
 
 function createWindow () {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
+  if (mainWindow != null) {
+    mainWindow.show();
+    mainWindow.focus();
+    return;
+  }
+  /**
+   * Initial window options
+   */
+
+  mainWindow = new BrowserWindow(BrowserWindowOptions)
+
+  // Window setting
+  mainWindow.loadFile('./index.html')
+  mainWindow.on('closed', () => {
+    mainWindow = null
   })
-
-  // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.on('hide', () => {
+    mainWindow.close()
+  })
+  mainWindow.on('click', () => {
+    console.log(TrayMenu)
+  })
+  mainWindow.show()
+  mainWindow.webContents.openDevTools();
+  // Tray initializing
+  if (tray == null) {
+    tray = CreateTray()
+  }
+  let trayPosition = tray.getBounds()
+  let WindowX = trayPosition.x - (mainWindow.getBounds().width / 2)
+  let WindowY = trayPosition.y - mainWindow.getBounds().height
+  mainWindow.setPosition(WindowX, WindowY)
+  console.log(trayPosition)
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(createWindow)
+app.on('ready', () => {
+  createWindow()
+  globalShortcut.register('f5', function() {
+    console.log('f5 is pressed')
+    mainWindow.reload()
+  })
 
-// Quit when all windows are closed.
-app.on('window-all-closed', function () {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') app.quit()
 })
 
-app.on('activate', function () {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) createWindow()
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin' && tray.isDestroyed()) {
+    app.quit()
+  }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+app.on('activate', () => {
+  if (mainWindow === null) {
+    createWindow()
+  }
+})
+
+function CreateTray () {
+  let t
+  t = new Tray(nativeImage.createFromPath('./assets/logo.png'))
+  // Tray setting
+  // console.log(TrayMenu)
+  TrayMenu.items[+TrayItemsId.OpenWindow].click = createWindow
+  TrayMenu.items[+TrayItemsId.Close].click = () => app.quit()
+  t.setToolTip('Canary player')
+  t.setContextMenu(TrayMenu)
+  return t
+}

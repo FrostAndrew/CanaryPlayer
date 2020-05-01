@@ -1,0 +1,45 @@
+@import 'varsNbase';
+html, body {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box !important;
+  background-color: transparent !important;
+  border-radius: 35px !important;
+}
+#app{
+  box-sizing: border-box !important;
+  background-color: $lightThemeColorBack !important;
+  border: 0px solid transparent;
+  box-shadow: inset 0px 0px 0px 5px $lightThemeColorControls;
+  border-radius: 32px !important;
+}
+body{
+  padding: 10px;
+}
+#playPause{
+  box-sizing: content-box;
+  width: fit-content;
+}
+#playPause :hover{
+  cursor: pointer;
+  transform-origin: center;
+  transform: scale(1.1);
+}
+#play-label{
+  font-family: caveatbold !important;
+  font-size: $font-size / 1.25;
+}
+.h-30 {
+  height: 30% !important;
+}
+#timePopper{
+  position: absolute;
+  width: 7% !important;
+  height: 7% !important;
+  color: $lightThemeColorControlsBack;
+  font-family: Arial !important;
+  font-size: $font-size / 1.8;
+  text-align: center;
+  border-radius: 30%;
+}
+//#timePopper[data-]

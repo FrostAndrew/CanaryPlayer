@@ -1,0 +1,35 @@
+$lightThemeColorBack: #f5e3cd;
+$lightThemeColorControls: #62210b;
+$lightThemeColorControlsBack: #ffffff;
+$font-size: 25px;
+
+@font-face {
+  font-family: 'caveatregular';
+  src: url('./Caveat-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'caveatbold';
+  src: url('./Caveat-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: caveatregular !important;
+  font-size: $font-size;
+}
+.control{
+  background-color: $lightThemeColorControls !important;
+}
+.control-bg{
+  background-color: $lightThemeColorControlsBack !important;
+}
+
+
+
