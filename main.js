@@ -5,17 +5,17 @@ const {
 } = require('electron')
 const electron = require('electron')
 const globalShortcut = electron.globalShortcut
-var ipc = require('electron').ipcMain;
+const fs = require('fs');
+const path = require('path');
+const ipcMain = require('electron').ipcMain;
+const ipcRenderer = require('electron').ipcRenderer
 
-ipc.on('invokeAction', function(event, data){
-  var result = processData(data);
-  event.sender.send('actionReply', result);
-});
+
 
 const BrowserWindowOptions = {
   width: 500,
   height: 300,
-  useContentSize: true,
+  useContentSize: false,
   webPreferences: {
     nodeIntegration: true
   },
@@ -34,10 +34,17 @@ let TrayMenu = Menu.buildFromTemplate([
   {id: TrayItemsId.Options, label: 'Options'},
   {id: TrayItemsId.Close, label: 'Close', role: 'close'}
 ])
+let AudioJson = {"audio_roots":{"paths":[],"songs":[]}}
+let SongsPaths = []
 
+let Pages = {
+  main: './index.html',
+  options: './options.html'
+}
 
-let mainWindow
-let tray = null
+let mainWindow = null;
+let view = null;
+let tray = null;
 
 function createWindow () {
   if (mainWindow != null) {
@@ -52,7 +59,7 @@ function createWindow () {
   mainWindow = new BrowserWindow(BrowserWindowOptions)
 
   // Window setting
-  mainWindow.loadFile('./index.html')
+  mainWindow.loadFile(Pages.main)
   mainWindow.on('closed', () => {
     mainWindow = null
   })
@@ -75,12 +82,18 @@ function createWindow () {
   console.log(trayPosition)
 }
 
-app.on('ready', () => {
-  createWindow()
+
+app.on('ready', async () => {
+  createWindow();
   globalShortcut.register('f5', function() {
-    console.log('f5 is pressed')
-    mainWindow.reload()
+    console.log('Page refreshed');
+    mainWindow.reload();
   })
+  await loadSongs();
+
+  ipcMain.handle('getSongsPaths', function(event){
+      return SongsPaths;
+  });
 
 })
 
@@ -101,9 +114,52 @@ function CreateTray () {
   t = new Tray(nativeImage.createFromPath('./assets/logo.png'))
   // Tray setting
   // console.log(TrayMenu)
-  TrayMenu.items[+TrayItemsId.OpenWindow].click = createWindow
-  TrayMenu.items[+TrayItemsId.Close].click = () => app.quit()
-  t.setToolTip('Canary player')
-  t.setContextMenu(TrayMenu)
+  TrayMenu.items[+TrayItemsId.OpenWindow].click = createWindow;
+  TrayMenu.items[+TrayItemsId.Options].click =
+  TrayMenu.items[+TrayItemsId.Close].click = () => app.quit();
+  t.setToolTip('Canary player');
+  t.setContextMenu(TrayMenu);
+  t.on('double-click', (e, rect) => {
+    createWindow();
+  });
   return t
+}
+
+  /*  */
+
+function ReadSongs (Json) {
+  // console.log('Start read');
+  const DirSongsPair = Json.audio_roots
+  // console.log(DirSongsPair)
+  for (let i = 0; i < DirSongsPair.paths.length; i++){
+    if(fs.existsSync(DirSongsPair.paths[i])) {
+      for (let j = 0; j < DirSongsPair.songs[i].length; j++) {
+        let dir = DirSongsPair.paths[i];
+        let song = DirSongsPair.songs[i][j];
+        let songPath = path.join(dir, song);
+        if (fs.existsSync(songPath))
+          SongsPaths.push(songPath);
+        else
+          Json.audio_roots.songs[i][j] = null
+      }
+    }
+    else
+      Json.audio_roots.paths[i] = null;
+  }
+  console.log('Songs loaded: ' + SongsPaths);
+  fs.writeFile('./songs_list.json', JSON.stringify(Json), 'utf8', res => res);
+}
+
+function loadSongs () {
+  // console.log('Start load');
+  if (fs.existsSync('./songs_list.json')) {
+    fs.readFile('./songs_list.json', 'utf8', function (err, data) {
+      if (err) throw err;
+      ReadSongs(JSON.parse(data));
+    });
+  } else {
+    fs.writeFile('./songs_list.json', JSON.stringify(AudioJson), 'utf8', err => {
+      console.log(err);
+    })
+  }
 }

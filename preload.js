@@ -5,8 +5,8 @@
 
 })*/
 const {Howl, Howler} = require('howler');
-const fs = require('fs');
-var $ = require( "jquery" );
+
+
 app.allowRendererProcessReuse = true;
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -20,12 +20,4 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
-function loadSongs() {
-  fs.readdir(__dirname, (dir) => {
-    // es6
-    for(let filePath of dir) {
-      console.log(filePath);
-    }
-  })
-}
-loadSongs();
+

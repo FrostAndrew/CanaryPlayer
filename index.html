@@ -3,42 +3,80 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <link rel="stylesheet" href="./assets/styles.css">
     <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css">
     <link rel="script" href="./assets/bootstrap/bootstrap.min.js">
-    <link rel="stylesheet" href="./assets/styles.css">
   </head>
   <body>
     <div id="app" class="h-100 w-100 pt-1">
-      <div id="play-line" class="container-fluid h-25 w-100 m-0 pt-1 pl-1 pr-1 pb-0">
-          <div class="row w-100 h-100">
-            <div class="col-2  d-flex justify-content-start" >
-              <div id="playPause">
-                <svg onclick="PlayPause(this)" class="bi bi-play-fill bi-pause-fill rounded-circle justify-content-center" width="50px" viewBox="0 0 16 16" fill="#62210b" xmlns="http://www.w3.org/2000/svg">
+      <div id="play-line" class="container-fluid h-33 w-100 m-0 pt-1 pl-1 pr-1 pb-0">
+          <div class="row w-100 h-65">
+            <div class="col-2 d-flex justify-content-start" >
+              <div id="playPause" class="hover-scale">
+                <svg onclick="PlayPause(this)" class="bi bi-play-fill bi-pause-fill justify-content-center" width="60px" viewBox="0 0 13 13" fill="#62210b" xmlns="http://www.w3.org/2000/svg">
                   <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"/>
                 </svg>
               </div>
             </div>
             <div class="col">
               <div class="row h-50">
-                <div id="play-label" class="col-12 d-flex flex-column justify-content-start text-center">
-                  NoizeMC - 26.04
+                <div class="col-12 d-flex flex-column justify-content-start text-center">
+                  <label id="play-label" >NoizeMC - 26.04</label>
                 </div>
               </div>
               <div class="row h-50">
                 <div class="col-12 d-flex flex-column justify-content-start text-center pt-1">
-                  <div id="progressBar" class="progress control-bg h-30">
+                  <div id="progressBar" class="progress control-bg h-50">
                     <div id="progress" class="progress-bar control" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        <div class="row w-100 h-35">
+          <div class="col-3"></div>
+          <div class="col-9 row w-100 h-100 d-flex justify-content-between hover-scale">
+            <div id="previous" class="h-100 col-1 d-flex flex-column justify-content-start">
+              <svg class="bi bi-skip-backward-fill" width="30px" height="30px" viewBox="0 0 16 16" fill="#62210b" xmlns="http://www.w3.org/2000/svg">
+                <path d="M.904 8.697l6.363 3.692c.54.313 1.233-.066 1.233-.697V4.308c0-.63-.692-1.01-1.233-.696L.904 7.304a.802.802 0 000 1.393z"/>
+                <path d="M8.404 8.697l6.363 3.692c.54.313 1.233-.066 1.233-.697V4.308c0-.63-.693-1.01-1.233-.696L8.404 7.304a.802.802 0 000 1.393z"/>
+              </svg>
+            </div>
+            <div id="stop" class="h-100 col-1 d-flex flex-column justify-content-start">
+              <svg class="bi bi-square-fill" width="30px" height="30px" viewBox="0 -2 14 16" fill="#62210b" xmlns="http://www.w3.org/2000/svg">
+                <rect width="12" height="12" rx="3"/>
+              </svg>
+            </div>
+            <div id="next" class="h-100 col-1 d-flex flex-column justify-content-start">
+              <svg class="bi bi-skip-forward-fill" width="30px" height="30px" viewBox="0 0 16 16" fill="#62210b" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.596 8.697l-6.363 3.692C.693 12.702 0 12.322 0 11.692V4.308c0-.63.693-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"/>
+                <path d="M15.096 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.693-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"/>
+              </svg>
+            </div>
+            <div id="repeat" class="h-100 col-1 d-flex flex-column justify-content-start">
+              <svg class="bi bi-arrow-clockwise" width="25px" height="25px" viewBox="-1 -1 16 16" fill="" xmlns="http://www.w3.org/2000/svg" stroke="#62210b" stroke-width="1.5px">
+                <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 017.103-3.16.5.5 0 10.454-.892A6 6 0 1013.455 5.5a.5.5 0 00-.91.417 5 5 0 11-9.375.789z" clip-rule="evenodd"/>
+                <path fill-rule="evenodd" d="M8.147.146a.5.5 0 01.707 0l2.5 2.5a.5.5 0 010 .708l-2.5 2.5a.5.5 0 11-.707-.708L10.293 3 8.147.854a.5.5 0 010-.708z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div id="audio" class="h-100 col-1 d-flex flex-column justify-content-start">
+              <svg class="bi bi-volume-down-fill" width="30px" height="30px" viewBox="0 0 16 16" fill="#62210b" xmlns="http://www.w3.org/2000/svg" stroke="#62210b" stroke-width="0.8px">
+                <path fill-rule="evenodd" d="M8.717 3.55A.5.5 0 019 4v8a.5.5 0 01-.812.39L5.825 10.5H3.5A.5.5 0 013 10V6a.5.5 0 01.5-.5h2.325l2.363-1.89a.5.5 0 01.529-.06z" clip-rule="evenodd"/>
+                <path d="M10.707 11.182A4.486 4.486 0 0012.025 8a4.486 4.486 0 00-1.318-3.182L10 5.525A3.489 3.489 0 0111.025 8c0 .966-.392 1.841-1.025 2.475l.707.707z"/>
+              </svg>
+            </div>
+            <div id="volumeBar" class="w-100 h-100 col-4 d-flex flex-column justify-content-center">
+              <input type="range" class="volume-range w-100 h-25" min="0" max="1" step="0.05" value="100">
+            </div>
+        </div>
+      </div>
       </div>
       <hr class="p-0 m-0">
       <div id="playlist" class="h-75 w-100 m-0 pt-1 pr-3 pl-3 pb-2">
-        <div class="bg-dark" id="timePopper" hidden>text</div>
+
       </div>
     </div>
+    <div id="timePopper" hidden>text</div>
   </body>
 </html>
 <script src="./renderer.js"></script>
