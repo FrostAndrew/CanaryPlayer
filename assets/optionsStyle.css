@@ -1,0 +1,57 @@
+@font-face {
+  font-family: "caveatregular";
+  src: url("./Caveat-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "caveatbold";
+  src: url("./Caveat-Bold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: caveatregular;
+  font-size: 25px;
+}
+
+.control {
+  background-color: #62210b !important;
+}
+
+.control-bg {
+  background-color: #ffffff !important;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: Arial !important;
+  font-size: 13px;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box !important;
+  background-color: transparent !important;
+  border-radius: 35px !important;
+}
+
+body {
+  padding: 10px;
+}
+
+#app {
+  box-sizing: border-box !important;
+  background-color: #f5e3cd !important;
+  border: 0px solid transparent;
+  box-shadow: inset 0px 0px 0px 5px #62210b;
+  border-radius: 32px !important;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=optionsStyle.css.map */

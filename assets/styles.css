@@ -1,0 +1,204 @@
+@font-face {
+  font-family: "caveatregular";
+  src: url("./Caveat-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "caveatbold";
+  src: url("./Caveat-Bold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: caveatregular;
+  font-size: 25px;
+}
+
+.control {
+  background-color: #62210b !important;
+}
+
+.control-bg {
+  background-color: #ffffff !important;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box !important;
+  background-color: transparent !important;
+  border-radius: 35px !important;
+}
+
+body {
+  padding: 10px;
+}
+
+#app {
+  box-sizing: border-box !important;
+  background-color: #f5e3cd !important;
+  border: 0px solid transparent;
+  box-shadow: inset 0px 0px 0px 5px #62210b;
+  border-radius: 32px !important;
+  overflow: hidden;
+  z-index: 2;
+}
+
+#playPause {
+  box-sizing: content-box;
+  width: fit-content;
+}
+
+.hover-scale :hover {
+  cursor: pointer;
+}
+.hover-scale :hover path, .hover-scale :hover rect {
+  transform-origin: center;
+  transform: scale(1.1);
+}
+
+#play-label {
+  font-family: caveatbold !important;
+  font-size: 20px;
+  user-select: none !important;
+}
+
+.h-70 {
+  height: 70% !important;
+}
+
+.h-65 {
+  height: 65% !important;
+}
+
+.h-30 {
+  height: 30% !important;
+}
+
+.h-33 {
+  height: 33% !important;
+}
+
+.h-35 {
+  height: 35% !important;
+}
+
+.w-90 {
+  width: 90% !important;
+}
+
+#timePopper {
+  position: absolute;
+  width: 7% !important;
+  height: 7% !important;
+  color: black;
+  font-family: Arial !important;
+  font-size: 13.8888888889px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #f5e3cd 0.7;
+}
+
+#playlist {
+  max-height: 75% !important;
+  overflow-y: auto;
+}
+
+#playlist::-webkit-scrollbar {
+  margin-right: -10px !important;
+  width: 10px;
+  z-index: -1;
+}
+
+/* Track */
+/* Handle */
+#playlist::-webkit-scrollbar-thumb {
+  background: #62210b;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+#playlist::-webkit-scrollbar-thumb:hover {
+  background: rgba(98, 33, 11, 0.9);
+}
+
+.fit-content {
+  width: fit-content;
+  height: fit-content;
+}
+
+.volume-range, .progress-range {
+  -webkit-appearance: none;
+  vertical-align: middle;
+  outline: none;
+  border: none;
+  padding: 0;
+  border-radius: 5px;
+}
+
+.volume-range {
+  background: linear-gradient(to right, #62210b 0%, #62210b 66%, #ffffff 100%);
+}
+
+.progress-range {
+  background: linear-gradient(to right, #62210b 0%, #62210b 0%, #ffffff 0%);
+  cursor: pointer;
+}
+
+.progress-range::-webkit-slider-runnable-track {
+  margin: 0;
+}
+
+.volume-range::-webkit-slider-thumb, .progress-range::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  background-color: #62210b;
+  border-radius: 50%;
+  width: 10%;
+  height: 100%;
+}
+
+.progress-range::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  box-sizing: content-box;
+  border-radius: 50%;
+  background-color: #f5e3cd;
+  height: 10px;
+  width: 10px;
+  border: 3px #62210b solid;
+  margin-left: -5px;
+}
+
+.song {
+  cursor: pointer;
+  height: 25px !important;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.song > div {
+  user-select: none;
+  max-height: 100%;
+  text-align: left;
+  font-size: 19.2307692308px;
+  overflow-y: auto !important;
+}
+
+.song > div::-webkit-scrollbar {
+  visibility: hidden;
+}
+
+.song-name {
+  font-family: caveatbold;
+  overflow-y: hidden !important;
+}
+
+.song:hover {
+  background-color: rgba(98, 33, 11, 0.2);
+}
+
+/*# sourceMappingURL=styles.css.map */
